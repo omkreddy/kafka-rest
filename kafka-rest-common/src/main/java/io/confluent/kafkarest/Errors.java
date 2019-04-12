@@ -27,6 +27,16 @@ import io.confluent.rest.exceptions.RestServerErrorException;
 
 public class Errors {
 
+  public static RestServerErrorException authorizationException(String errorMessage) {
+    return new RestServerErrorException(errorMessage,
+        Response.Status.FORBIDDEN.getStatusCode());
+  }
+
+  public static RestServerErrorException authenticationException(String errorMessage) {
+    return new RestServerErrorException(errorMessage,
+        Response.Status.FORBIDDEN.getStatusCode());
+  }
+
   public static final String TOPIC_NOT_FOUND_MESSAGE = "Topic not found.";
   public static final int TOPIC_NOT_FOUND_ERROR_CODE = 40401;
 
