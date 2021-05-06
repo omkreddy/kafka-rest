@@ -31,10 +31,13 @@ import java.io.IOException;
 import java.util.Optional;
 import javax.inject.Inject;
 import org.apache.kafka.common.errors.SerializationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 final class SchemaManagerImpl implements SchemaManager {
   private final SchemaRegistryClient schemaRegistryClient;
   private final SubjectNameStrategy defaultSubjectNameStrategy;
+  private static final Logger log = LoggerFactory.getLogger(SchemaManagerImpl.class);
 
   @Inject
   SchemaManagerImpl(
@@ -188,6 +191,7 @@ final class SchemaManagerImpl implements SchemaManager {
     try {
       try {
         // Check if the schema already exists first.
+        log.info("MANI: Calling  schemaRegistryClient actualSubject :" + actualSubject);
         schemaId = schemaRegistryClient.getId(actualSubject, schema);
       } catch (IOException | RestClientException e) {
         // Could not find the schema. We try to register the schema in that case.
